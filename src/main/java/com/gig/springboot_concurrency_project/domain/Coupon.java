@@ -1,9 +1,6 @@
 package com.gig.springboot_concurrency_project.domain;
 
-import com.gig.springboot_concurrency_project.domain.type.ChannelType;
-import com.gig.springboot_concurrency_project.domain.type.CouponType;
-import com.gig.springboot_concurrency_project.domain.type.ProcessStatus;
-import com.gig.springboot_concurrency_project.domain.type.YnType;
+import com.gig.springboot_concurrency_project.domain.type.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +31,8 @@ public class Coupon extends BaseEntity {
     @Column(name = "coupon_name")
     private String name;
 
+    private String content;
+
     @Builder.Default
     @Column(length = 1)
     @Enumerated(EnumType.STRING)
@@ -49,23 +48,57 @@ public class Coupon extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ChannelType channelType = ChannelType.COMMON;
 
-    private String content;
-
     @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "process_status", length = 20, nullable = false)
     private ProcessStatus status = ProcessStatus.BEFORE;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "coupon_type", length = 20, nullable = false)
-    private CouponType type;
+    @Column(length = 20, nullable = false)
+    private CouponType couponType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private SaleType saleType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private CouponDiscountTarget discountTarget;
 
     private int salePrice;
 
-    private String notice;
+    private int saleRate;
+
+    private String useCondition;
+
+    private int sharePartnerRate;
 
     @Column(name = "coupon_image_url", length = 1000)
     private String imageUrl;
+
+    private Long brandId;
+
+    private Long categoryId;
+
+    private Long partnerId;
+
+    private Long productId;
+
+    @Builder.Default
+    @Column(length = 1)
+    @Enumerated(EnumType.STRING)
+    private YnType publishQtyLimitYn = YnType.N;
+
+    private int maxPublishQty;
+
+    @Builder.Default
+    @Column(length = 1)
+    @Enumerated(EnumType.STRING)
+    private YnType downloadQtyLimitYn = YnType.N;
+
+    private int maxDownloadQty;
+
+    private int useWithinDay;
 
     private LocalDateTime publishStartAt;
 
@@ -75,7 +108,7 @@ public class Coupon extends BaseEntity {
 
     private LocalDateTime useEndAt;
 
-    private String createdByUsername;
+    private String createdByName;
 
-    private String updatedByUsername;
+    private String updatedByName;
 }

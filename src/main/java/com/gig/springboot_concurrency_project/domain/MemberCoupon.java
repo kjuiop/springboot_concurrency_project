@@ -7,6 +7,8 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
+
 import static javax.persistence.FetchType.LAZY;
 
 /**
@@ -36,4 +38,21 @@ public class MemberCoupon extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "coupon_status", length = 20, nullable = false)
     private CouponStatus status;
+
+    private LocalDateTime useStartAt;
+
+    private LocalDateTime useEndAt;
+
+    private String givenReason;
+
+    private LocalDateTime givenAt;
+
+    private String withdrawReason;
+
+    private LocalDateTime withdrawAt;
+
+    private LocalDateTime downloadAt;
+
+    private LocalDateTime recoveryAt;
+
 }
