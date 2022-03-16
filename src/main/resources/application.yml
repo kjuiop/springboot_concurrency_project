@@ -1,2 +1,17 @@
+spring:
+  profiles:
+    active: local
+  main:
+    allow-bean-definition-overriding: true
+
 server:
+  servlet:
+    timeout: 3600
+  error:
+    path: /error
+    whitelabel:
+      enabled: false
+  tomcat:
+    remote-ip-header: x-forwarded-for
+    protocol-header: x-forwarded-proto
   port: 9090

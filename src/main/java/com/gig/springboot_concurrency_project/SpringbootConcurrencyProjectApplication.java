@@ -6,13 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@RequiredArgsConstructor
 public class SpringbootConcurrencyProjectApplication {
 
-    private static InitUtils initUtils;
-
     public static void main(String[] args) {
-        initUtils.initData();
         SpringApplication.run(SpringbootConcurrencyProjectApplication.class, args);
     }
 

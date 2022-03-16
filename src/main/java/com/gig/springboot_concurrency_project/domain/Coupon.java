@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,11 +22,8 @@ import java.time.LocalDateTime;
 public class Coupon extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "coupon_id")
-    private Long id;
-
-    @Column(nullable = false)
+    @GenericGenerator(name = "coupon_no", strategy = "com.gig.springboot_concurrency_project.domain.generator.CouponNoGenerator")
+    @GeneratedValue(generator = "coupon_no")
     private String couponNo;
 
     @Column(name = "coupon_name")
