@@ -18,6 +18,7 @@ import java.sql.SQLException;
 @Slf4j
 public class CouponNoGenerator implements IdentifierGenerator {
 
+
     @Override
     public synchronized Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         Connection connection = session.connection();
