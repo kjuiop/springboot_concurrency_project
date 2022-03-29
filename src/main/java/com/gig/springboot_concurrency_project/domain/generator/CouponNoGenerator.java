@@ -25,7 +25,7 @@ public class CouponNoGenerator implements IdentifierGenerator {
             PreparedStatement ps = connection.prepareStatement("select concat(DATE_FORMAT(now(),'%Y%m%d'), lpad((ifnull(max(order_id),DATE_FORMAT(now(),'%Y%m%d000000')) - DATE_FORMAT(now(),'%Y%m%d000000')  + 1), 6,0)) as order_no from t_order where DATE_FORMAT(order_date,'%Y-%m-%d')=DATE_FORMAT(now(),'%Y-%m-%d')");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return Long.parseLong(rs.getString("order_no"));
+                return Long.parseLong(rs.getString("coupon_no"));
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
