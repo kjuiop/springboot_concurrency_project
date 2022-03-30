@@ -1,5 +1,6 @@
 package com.gig.springboot_concurrency_project.domain;
 
+import com.gig.springboot_concurrency_project.domain.BaseEntity;
 import com.gig.springboot_concurrency_project.domain.type.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +43,7 @@ public class Coupon extends BaseEntity {
     private YnType recoveryYn = YnType.N;
 
     @Builder.Default
-    @Column(length = 1)
+    @Column(length = 20)
     @Enumerated(EnumType.STRING)
     private ChannelType channelType = ChannelType.COMMON;
 
@@ -109,4 +110,21 @@ public class Coupon extends BaseEntity {
     private String createdByName;
 
     private String updatedByName;
+
+    public static Coupon init() {
+        return Coupon.builder()
+                .name("회원가입 축하 할인 쿠폰")
+                .content("회원가입 축하쿠폰")
+                .couponType(CouponType.PRODUCT)
+                .saleType(SaleType.PRICE)
+                .salePrice(200000)
+                .discountTarget(CouponDiscountTarget.PRODUCT)
+                .downloadQtyLimitYn(YnType.Y)
+                .maxDownloadQty(1)
+                .useWithinDay(7)
+                .publishStartAt(LocalDateTime.now())
+                .createdByName("관리자")
+                .updatedByName("관리자")
+                .build();
+    }
 }

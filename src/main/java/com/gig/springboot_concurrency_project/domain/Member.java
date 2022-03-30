@@ -1,5 +1,6 @@
 package com.gig.springboot_concurrency_project.domain;
 
+import com.gig.springboot_concurrency_project.domain.BaseEntity;
 import com.gig.springboot_concurrency_project.domain.type.UserStatus;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

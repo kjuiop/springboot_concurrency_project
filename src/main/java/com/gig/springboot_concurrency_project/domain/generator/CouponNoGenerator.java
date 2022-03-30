@@ -10,6 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author : Jake
@@ -18,20 +23,39 @@ import java.sql.SQLException;
 @Slf4j
 public class CouponNoGenerator implements IdentifierGenerator {
 
+    private final String prefixCouponNo = "CN";
 
     @Override
     public synchronized Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         Connection connection = session.connection();
         try {
-            PreparedStatement ps = connection.prepareStatement("select concat(DATE_FORMAT(now(),'%Y%m%d'), lpad((ifnull(max(order_id),DATE_FORMAT(now(),'%Y%m%d000000')) - DATE_FORMAT(now(),'%Y%m%d000000')  + 1), 6,0)) as order_no from t_order where DATE_FORMAT(order_date,'%Y-%m-%d')=DATE_FORMAT(now(),'%Y-%m-%d')");
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(C.COUPON_NO) FROM COUPON C");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return Long.parseLong(rs.getString("coupon_no"));
+                String lastCouponNo = rs.getString("coupon_no");
+                if (lastCouponNo.isEmpty()) {
+                    lastCouponNo = String.format("%010d", 1);
+                }
+
+                lastCouponNo.substring(lastCouponNo.length() - 9, lastCouponNo.length());
+
+
+//                lastCouponNo.split()
+
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
-
         }
         return null;
+    }
+
+    private String getCurrentDateFormat() {
+        Date currentDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        return formatter.format(currentDate);
+    }
+
+    private static long getCurrentTimeMillis() {
+        return Calendar.getInstance(Locale.KOREA).getTimeInMillis();
     }
 }

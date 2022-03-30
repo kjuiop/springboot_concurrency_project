@@ -1,12 +1,17 @@
 package com.gig.springboot_concurrency_project.util;
 
 import com.gig.springboot_concurrency_project.domain.Coupon;
-import com.gig.springboot_concurrency_project.exception.AlreadyEntity;
+import com.gig.springboot_concurrency_project.domain.type.ChannelType;
+import com.gig.springboot_concurrency_project.domain.type.CouponType;
+import com.gig.springboot_concurrency_project.domain.type.SaleType;
+import com.gig.springboot_concurrency_project.domain.type.YnType;
 import com.gig.springboot_concurrency_project.repository.CouponRepository;
 import com.gig.springboot_concurrency_project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * @author : Jake
@@ -25,8 +30,8 @@ public class InitUtils {
             return;
         }
 
-        Coupon coupon = new Coupon();
-
+        Coupon coupon = Coupon.init();
+        couponRepository.save(coupon);
     }
 
 }

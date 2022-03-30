@@ -1,12 +1,13 @@
 package com.gig.springboot_concurrency_project.domain;
 
 import com.gig.springboot_concurrency_project.domain.type.CouponStatus;
-import com.gig.springboot_concurrency_project.domain.type.ProcessStatus;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
