@@ -38,10 +38,6 @@ public class CouponNoGenerator implements IdentifierGenerator {
                 }
 
                 lastCouponNo.substring(lastCouponNo.length() - 9, lastCouponNo.length());
-
-
-//                lastCouponNo.split()
-
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
