@@ -2,6 +2,7 @@ package com.gig.springboot_concurrency_project.domain;
 
 import com.gig.springboot_concurrency_project.domain.BaseEntity;
 import com.gig.springboot_concurrency_project.domain.type.*;
+import com.gig.springboot_concurrency_project.dto.CouponCreateForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -122,6 +123,23 @@ public class Coupon extends BaseEntity {
                 .downloadQtyLimitYn(YnType.Y)
                 .maxDownloadQty(1)
                 .useWithinDay(7)
+                .publishStartAt(LocalDateTime.now())
+                .createdByName("관리자")
+                .updatedByName("관리자")
+                .build();
+    }
+
+    public static Coupon create(CouponCreateForm form) {
+        return Coupon.builder()
+                .name(form.getName())
+                .content(form.getContent())
+                .couponType(form.getCouponType())
+                .saleType(form.getSaleType())
+                .salePrice(form.getSalePrice())
+                .discountTarget(form.getDiscountTarget())
+                .downloadQtyLimitYn(form.getDownloadLimitYn())
+                .maxDownloadQty(form.getMaxDownloadQty())
+                .useWithinDay(form.getUseWithinDay())
                 .publishStartAt(LocalDateTime.now())
                 .createdByName("관리자")
                 .updatedByName("관리자")

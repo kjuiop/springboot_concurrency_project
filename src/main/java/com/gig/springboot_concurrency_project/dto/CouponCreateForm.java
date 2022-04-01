@@ -19,6 +19,8 @@ public class CouponCreateForm {
 
     private String name;
 
+    private String content;
+
     private CouponType couponType;
 
     private SaleType saleType;
@@ -28,6 +30,12 @@ public class CouponCreateForm {
     private int salePrice;
 
     private int saleRate;
+
+    private YnType downloadLimitYn;
+
+    private int maxDownloadQty;
+
+    private int useWithinDay;
 
     private LocalDateTime publishStartAt;
 

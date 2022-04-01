@@ -29,15 +29,17 @@ public class CouponNoGenerator implements IdentifierGenerator {
     public synchronized Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
         Connection connection = session.connection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT MAX(C.COUPON_NO) FROM COUPON C");
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(COUPON_NO) AS COUPON_NO FROM COUPON");
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                String lastCouponNo = rs.getString("coupon_no");
-                if (lastCouponNo.isEmpty()) {
+                String lastCouponNo = rs.getString("COUPON_NO");
+                if (lastCouponNo == null) {
                     lastCouponNo = String.format("%010d", 1);
                 }
 
-                lastCouponNo.substring(lastCouponNo.length() - 9, lastCouponNo.length());
+//                lastCouponNo.substring(lastCouponNo.length() - 9, lastCouponNo.length());
+
+                return prefixCouponNo + getCurrentDateFormat() + lastCouponNo;
             }
         } catch (SQLException e) {
             log.error(e.getMessage(), e);

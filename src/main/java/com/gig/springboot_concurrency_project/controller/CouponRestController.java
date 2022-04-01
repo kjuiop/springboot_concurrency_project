@@ -8,6 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,12 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @date : 2022-03-30
  */
 @RestController
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class CouponRestController {
 
     private final CouponService couponService;
 
-    @PostMapping("coupon")
+    @PostMapping("/coupon")
     public ResponseEntity createCoupon(@RequestBody @Validated CouponCreateForm createForm
                                         , Errors errors) {
 
@@ -28,7 +30,7 @@ public class CouponRestController {
             return ResponseEntity.badRequest().body(errors.getAllErrors());
         }
 
-        String couponNo = couponService.createByAdmin(createForm);
+        String couponNo = couponService.create(createForm);
 
         return ResponseEntity.ok().body(couponNo);
     }
