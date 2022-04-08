@@ -36,8 +36,11 @@ public class CouponNoGenerator implements IdentifierGenerator {
                 if (lastCouponNo == null) {
                     lastCouponNo = String.format("%010d", 1);
                 }
-
-//                lastCouponNo.substring(lastCouponNo.length() - 9, lastCouponNo.length());
+                else {
+                    lastCouponNo = lastCouponNo.substring(lastCouponNo.length() - 9, lastCouponNo.length());
+                    int currentCouponNo = Integer.parseInt(lastCouponNo) + 1;
+                    lastCouponNo = String.format("%010d", currentCouponNo);
+                }
 
                 return prefixCouponNo + getCurrentDateFormat() + lastCouponNo;
             }

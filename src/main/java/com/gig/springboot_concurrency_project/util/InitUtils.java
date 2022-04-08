@@ -1,6 +1,7 @@
 package com.gig.springboot_concurrency_project.util;
 
 import com.gig.springboot_concurrency_project.domain.Coupon;
+import com.gig.springboot_concurrency_project.domain.Member;
 import com.gig.springboot_concurrency_project.domain.type.ChannelType;
 import com.gig.springboot_concurrency_project.domain.type.CouponType;
 import com.gig.springboot_concurrency_project.domain.type.SaleType;
@@ -32,6 +33,9 @@ public class InitUtils {
 
         Coupon coupon = Coupon.init();
         couponRepository.save(coupon);
+
+        Member member = Member.init();
+        memberRepository.save(member);
     }
 
 }

@@ -1,10 +1,7 @@
 package com.gig.springboot_concurrency_project.domain;
 
 import com.gig.springboot_concurrency_project.domain.type.CouponStatus;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -25,7 +22,7 @@ public class MemberCoupon extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "coupon_member_id")
+    @Column(name = "member_coupon_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
@@ -36,9 +33,10 @@ public class MemberCoupon extends BaseEntity {
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "coupon_status", length = 20, nullable = false)
-    private CouponStatus status;
+    private CouponStatus status = CouponStatus.UNUSED;
 
     private LocalDateTime useStartAt;
 
@@ -55,5 +53,13 @@ public class MemberCoupon extends BaseEntity {
     private LocalDateTime downloadAt;
 
     private LocalDateTime recoveryAt;
+
+    public static MemberCoupon download(Member member, Coupon coupon) {
+        return MemberCoupon.builder()
+                .member(member)
+                .coupon(coupon)
+                .downloadAt(LocalDateTime.now())
+                .build();
+    }
 
 }

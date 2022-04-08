@@ -121,7 +121,7 @@ public class Coupon extends BaseEntity {
                 .salePrice(200000)
                 .discountTarget(CouponDiscountTarget.PRODUCT)
                 .downloadQtyLimitYn(YnType.Y)
-                .maxDownloadQty(1)
+                .maxDownloadQty(5)
                 .useWithinDay(7)
                 .publishStartAt(LocalDateTime.now())
                 .createdByName("관리자")

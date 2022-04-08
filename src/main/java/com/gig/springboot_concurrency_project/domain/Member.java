@@ -41,4 +41,11 @@ public class Member extends BaseEntity {
 
     private LocalDateTime withDrawAt;
 
+    public static Member init() {
+        return Member.builder()
+                .username("initMember@naver.com")
+                .password("1234")
+                .build();
+    }
+
 }
