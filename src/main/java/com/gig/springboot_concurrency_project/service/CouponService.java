@@ -4,6 +4,7 @@ import com.gig.springboot_concurrency_project.domain.Coupon;
 import com.gig.springboot_concurrency_project.domain.Member;
 import com.gig.springboot_concurrency_project.domain.MemberCoupon;
 import com.gig.springboot_concurrency_project.dto.CouponCreateForm;
+import com.gig.springboot_concurrency_project.dto.MemberCouponDto;
 import com.gig.springboot_concurrency_project.exception.NotFoundException;
 import com.gig.springboot_concurrency_project.repository.CouponRepository;
 import com.gig.springboot_concurrency_project.repository.MemberCouponRepository;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author : Jake
@@ -54,13 +55,19 @@ public class CouponService {
         String threadName = Thread.currentThread().getName();
         log.info("{} / coupon size = {}", threadName, memberCoupons.size());
 
-        List<String> memberCouponNames = new ArrayList<>();
-
         if (memberCoupons.size() < maxDownloadQty) {
             MemberCoupon newMemberCoupon = MemberCoupon.download(initMember, initCoupon);
-            MemberCoupon memberCoupon = memberCouponRepository.save(newMemberCoupon);
-            memberCouponNames.add(memberCoupon.getCoupon().getCouponNo());
+            memberCouponRepository.save(newMemberCoupon);
         }
+    }
+
+    public List<MemberCouponDto> getInitMemberCoupon() {
+        Member initMember = memberRepository.getFirstMember().orElseThrow(() -> new NotFoundException("not exist member"));
+        Coupon initCoupon = couponRepository.getFirstCoupon().orElseThrow(() -> new NotFoundException("not exist coupon"));
+
+        List<MemberCoupon> memberCoupons = memberCouponRepository.findByMemberAndCoupon(initMember, initCoupon);
+
+        return memberCoupons.stream().map(MemberCouponDto::new).collect(Collectors.toList());
     }
 
 

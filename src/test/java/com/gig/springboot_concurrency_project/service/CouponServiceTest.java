@@ -1,5 +1,6 @@
 package com.gig.springboot_concurrency_project.service;
 
+import com.gig.springboot_concurrency_project.dto.MemberCouponDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -7,9 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author : Jake
@@ -23,8 +27,14 @@ public class CouponServiceTest {
     private CouponService couponService;
 
     @Test
-    @DisplayName("쿠폰다운로드 테스트")
+    @DisplayName("쿠폰다운로드테스트")
     public void couponDownloadTest() {
+        couponService.couponDownload();
+    }
+
+    @Test
+    @DisplayName("쿠폰다운로드 동시성 테스트")
+    public void couponDownloadConcurrencyTest() {
 
         try {
             ExecutorService executorService = Executors.newFixedThreadPool(5);
@@ -41,8 +51,8 @@ public class CouponServiceTest {
 
             latch.await();
 
-//            List<MemberCoupon> memberCoupons = memberCouponRepository.findByMemberIdAndCouponId(1L, 1L);
-//            assertEquals(memberCoupons.size(), 3);
+            List<MemberCouponDto> memberCoupons = couponService.getInitMemberCoupon();
+            assertEquals(memberCoupons.size(), 3);
         } catch (RuntimeException | InterruptedException re) {
             re.printStackTrace();
         }
